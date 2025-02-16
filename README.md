@@ -1,27 +1,23 @@
-
 import pygame
 import random
 
-
 pygame.init()
 
-# Tamanho da tela
 largura = 800
 altura = 600
 tela = pygame.display.set_mode((largura, altura))
 pygame.display.set_caption("Foguete Blaze")
 
-# Cores
 branco = (255, 255, 255)
 preto = (0, 0, 0)
 vermelho = (255, 0, 0)
 
-# Carregar imagens
+# Carregar imagens (ajuste os caminhos conforme necessário)
 nave_img = pygame.image.load("Foguete Blaze.png")
 asteroide_img = pygame.image.load("asteroide_screen.png")
 fundo_img = pygame.image.load("Espaçosideral_screen.jpg")
 
-# Redimensionar imagens 
+# Redimensionar imagens (opcional)
 nave_img = pygame.transform.scale(nave_img, (50, 50))
 asteroide_img = pygame.transform.scale(asteroide_img, (50, 50))
 fundo_img = pygame.transform.scale(fundo_img, (largura, altura))
@@ -68,15 +64,15 @@ class Asteroide(pygame.sprite.Sprite):
             self.rect.y = random.randrange(-100, -40)
             self.speedy = random.randrange(1, 8)
 
-# exibir o placar
+# Função para exibir o placar
 def exibir_placar(surf, texto, tamanho, x, y):
     fonte = pygame.font.Font(None, tamanho)  # Usando a fonte padrão
     texto_surface = fonte.render(texto, True, branco)
     texto_rect = texto_surface.get_rect()
-    texto_rect.midtop = (x, y)
+    texto_rect.midtop = (x, y)  
     surf.blit(texto_surface, texto_rect)
 
-#desenhar o texto centralizado
+# Função para desenhar o texto centralizado
 def desenhar_texto(surf, texto, tamanho, cor, x, y):
     fonte = pygame.font.Font(None, tamanho)  # Usando a fonte padrão
     texto_surface = fonte.render(texto, True, cor)  # True para anti-aliasing
@@ -100,7 +96,7 @@ def salvar_recorde(recorde):
 # Loop principal do jogo
 clock = pygame.time.Clock()
 pontuacao = 0
-recorde = carregar_recorde()  
+recorde = carregar_recorde()  # Carrega o recorde ao iniciar o jogo
 game_over = False
 running = True
 no_menu = True
@@ -179,13 +175,13 @@ while running:
             game_over = True
             if pontuacao > recorde:
                 recorde = pontuacao
-                salvar_recorde(recorde) 
+                salvar_recorde(recorde)  # Salva o novo recorde
 
         # Render
-        tela.blit(fundo_img, (0, 0))  
+        tela.blit(fundo_img, (0, 0))  # Desenha o fundo
         todos_sprites.draw(tela)
         exibir_placar(tela, "Pontuação: " + str(pontuacao), 24, largura // 2, 10)
-        exibir_placar(tela, "Recorde: " + str(recorde), 24, largura // 4, 10) 
+        exibir_placar(tela, "Recorde: " + str(recorde), 24, largura // 4, 10)  # Exibe o recorde
         pygame.display.flip()
 
         # Aumentar a pontuação
